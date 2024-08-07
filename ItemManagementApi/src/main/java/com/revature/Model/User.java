@@ -1,6 +1,5 @@
 package com.revature.Model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -12,28 +11,28 @@ import java.util.List;
 @NoArgsConstructor
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userID;
     @Column
-    private String username;
+    private String userName;
     @Column
     private String password;
     @Column
-    private String firstname;
+    private String firstName;
     @Column
-    private String lastname;
+    private String lastName;
     @Column
     private boolean admin;
 
-//    @OneToMany(fetch = FetchType.EAGER)
-//    //@JoinColumn(name = "savedBy")
-//    //@JsonManagedReference
-//    //@JoinTable(name = "Song", joinColumns = @JoinColumn(name = "savedBy"))
-//    @JoinColumn(name = "user_fk")
-//    private List<Song> songs;
-
-    @Column
     @OneToMany(fetch = FetchType.EAGER)
-//  @JoinColumn(name = "user_fk")
-    private List<Song> songs;
+    @JoinColumn(name = "user_fk")
+    private List<Song> userSongs;
+
+    public User(String userName, String password, String firstName, String lastName, boolean admin) {
+        this.userName = userName;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.admin = admin;
+    }
 }

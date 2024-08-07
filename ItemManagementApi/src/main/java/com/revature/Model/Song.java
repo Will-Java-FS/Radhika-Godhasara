@@ -4,15 +4,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Song {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long songID;
     @Column
     private String songName;
@@ -23,18 +21,15 @@ public class Song {
     @Column
     private String year;
 
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JsonBackReference
-//    //@JoinColumn(name = "savedBy")
-//    //@JoinTable(name = "User", joinColumns = @JoinColumn(name = "savedBy"))
-//    //private User userID;
-//    @JoinColumn(name = "user_fk")
-//    private Song song; //-- working
-//    //private Long userID;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonBackReference
+    @JoinColumn(name = "user_fk")
+    private User userID;
 
-    @Column
-    private Long savedBy;
-
-    @Column
-    private List<Long> userID;
+    public Song(String songName, String artist, String genre, String year) {
+        this.songName = songName;
+        this.artist = artist;
+        this.genre = genre;
+        this.year = year;
+    }
 }
